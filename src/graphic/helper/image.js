@@ -21,8 +21,8 @@ export function findExistImage(newImageOrSrc) {
  * Caution: User should cache loaded images, but not just count on LRU.
  * Consider if required images more than LRU size, will dead loop occur?
  *
- * @param {string|HTMLImageElement|HTMLCanvasElement|Canvas} newImageOrSrc
- * @param {HTMLImageElement|HTMLCanvasElement|Canvas} image Existent image.
+ * @param {string} newImageOrSrc
+ * @param {Image} image Existent image(custom defined image object).
  * @param {module:zrender/Element} [hostEl] For calling `dirty`.
  * @param {Function} [cb] params: (image, cbPayload)
  * @param {Object} [cbPayload] Payload on cb calling.
@@ -50,7 +50,7 @@ export function createOrUpdateImage(newImageOrSrc, image, hostEl, cb, cbPayload)
             !isImageReady(image) && cachedImgObj.pending.push(pendingWrap);
         }
         else {
-            !image && (image = new Image());
+            !image && (image = new Object());
             image.onload = imageOnLoad;
 
             globalImageCache.put(
@@ -62,6 +62,22 @@ export function createOrUpdateImage(newImageOrSrc, image, hostEl, cb, cbPayload)
             );
 
             image.src = image.__zrImageSrc = newImageOrSrc;
+
+            // Issue wx.getImageInfo for loading
+            wx.getImageInfo({
+                src: newImageOrSrc,
+                success: function(width, height, path, orientation, type) {
+                    image.width = width;
+                    image.height = height;
+                    image.path = path;
+                    image.orientation = orientation;
+                    image.type = type;
+                    image.onload();
+                },
+                fail: {
+
+                }
+            });
         }
 
         return image;

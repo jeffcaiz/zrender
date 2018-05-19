@@ -69,7 +69,7 @@ ZImage.prototype = {
             var sx = style.sx || 0;
             var sy = style.sy || 0;
             ctx.drawImage(
-                image,
+                image.path,
                 sx, sy, style.sWidth, style.sHeight,
                 x, y, width, height
             );
@@ -80,13 +80,13 @@ ZImage.prototype = {
             var sWidth = width - sx;
             var sHeight = height - sy;
             ctx.drawImage(
-                image,
+                image.path,
                 sx, sy, sWidth, sHeight,
                 x, y, width, height
             );
         }
         else {
-            ctx.drawImage(image, x, y, width, height);
+            ctx.drawImage(image.path, x, y, width, height);
         }
 
         // Draw rect text
