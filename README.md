@@ -3,6 +3,10 @@ ZRender
 
 A lightweight canvas library which providing 2d draw for [ECharts](https://github.com/ecomfe/echarts)
 
+## Mod
+Fork and minor change to support wechat mini app. Note, it breaks browser support!!
+
+
 ## Document
 
 [https://ecomfe.github.io/zrender-doc/public/](https://ecomfe.github.io/zrender-doc/public/)
