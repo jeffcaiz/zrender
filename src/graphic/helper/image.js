@@ -66,12 +66,12 @@ export function createOrUpdateImage(newImageOrSrc, image, hostEl, cb, cbPayload)
             // Issue wx.getImageInfo for loading
             wx.getImageInfo({
                 src: newImageOrSrc,
-                success: function(width, height, path, orientation, type) {
-                    image.width = width;
-                    image.height = height;
-                    image.path = path;
-                    image.orientation = orientation;
-                    image.type = type;
+                success: function(res) {
+                    image.width = res.width;
+                    image.height = res.height;
+                    image.path = res.path;
+                    image.orientation = res.orientation;
+                    image.type = res.type;
                     image.onload();
                 },
                 fail: {
